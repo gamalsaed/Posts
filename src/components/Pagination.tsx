@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { SearchContext } from "@/Context/SearchContext";
+import { useState, useEffect, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 export default function Pagination({ totalPages }: { totalPages: number }) {
+  const { author } = useContext(SearchContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(
     parseInt(searchParams.get("page") || "1", 10)
@@ -9,6 +11,11 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   useEffect(() => {
     setSearchParams({ page: currentPage.toString() });
   }, [currentPage]);
+
+  useEffect(() => {
+    setSearchParams({ page: "1" });
+    setCurrentPage(1);
+  }, [author]);
 
   const pages = [];
   const maxVisible = 3;

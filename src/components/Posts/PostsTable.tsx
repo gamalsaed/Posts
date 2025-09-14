@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SearchContext } from "@/Context/SearchContext";
 import { useQuery } from "@tanstack/react-query";
@@ -23,10 +23,14 @@ interface post {
 }
 
 export default function PostsTable() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { author, search } = useContext(SearchContext);
   const pageParam = searchParams.get("page");
   const page: number = pageParam ? parseInt(pageParam, 10) : 1;
+
+  useEffect(() => {
+    setSearchParams({ page: "1" });
+  }, [author]);
 
   const {
     data: posts,
@@ -78,11 +82,11 @@ export default function PostsTable() {
               key={post.title}
               className="border-gray-300 hover:bg-white cursor-pointer !w-full"
             >
-              <Link to={`post/${post.id}`} className="w-full">
-                <TableCell className="font-medium text-[16px] p-3 !w-full">
+              <TableCell className="font-medium text-[16px] p-3 !w-full">
+                <Link to={`post/${post.id}`} className="w-full">
                   {post.title}
-                </TableCell>
-              </Link>
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

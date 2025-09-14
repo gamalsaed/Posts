@@ -1,10 +1,9 @@
 import { useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchUsers } from "@/lib/api";
 import { Link } from "react-router-dom";
 import { ScrollText, Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { SearchContext } from "@/Context/SearchContext";
+import { UsersContext } from "@/Context/UsersContext";
 import {
   Select,
   SelectContent,
@@ -14,38 +13,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface User {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    };
-  };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-}
-
 export default function PostsHeader() {
   const { search, setSearch, setAuthor } = useContext(SearchContext);
-
-  const { data } = useQuery({
-    queryKey: ["users"],
-    queryFn: fetchUsers,
-  });
-
+  const { users } = useContext(UsersContext);
   return (
     <>
       <header className="bg-white rounded-t-2xl p-3 mt-5 font-semibold  flex justify-between max-sm:flex-col max-sm:items-center max-sm:gap-5">
@@ -91,8 +61,12 @@ export default function PostsHeader() {
                   <SelectItem value={false} className="opacity-60">
                     All
                   </SelectItem>
-                  {data?.map((user: User) => {
-                    return <SelectItem value={user.id}>{user.name}</SelectItem>;
+                  {users?.map((user) => {
+                    return (
+                      <SelectItem key={user.name} value={user.id}>
+                        {user.name}
+                      </SelectItem>
+                    );
                   })}
                 </SelectGroup>
               </SelectContent>
