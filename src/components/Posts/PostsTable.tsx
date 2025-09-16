@@ -71,19 +71,22 @@ export default function PostsTable() {
     return (
       <Table className="mb-5 ">
         <TableCaption className="bg-white p-5 rounded-b-2xl m-0">
-          <div className="flex justify-center">
+          <div className="flex justify-center w-full">
             <Pagination totalPages={totalPages} />
           </div>
         </TableCaption>
 
-        <TableBody className="bg-[#ffffffb6] bac backdrop-blur-sm">
+        <TableBody className="bg-[#ffffffb6] backdrop-blur-sm  overflow-hidden">
           {pagePosts.map((post: post) => (
             <TableRow
               key={post.title}
-              className="border-gray-300 hover:bg-white cursor-pointer !w-full"
+              className="border-gray-300 hover:bg-white cursor-pointer  overflow-hidden"
             >
-              <TableCell className="font-medium text-[16px] p-3 !w-full">
-                <Link to={`post/${post.id}`} className="w-full">
+              <TableCell className="font-medium text-[16px] p-3 ">
+                <Link
+                  to={`post/${post.id}`}
+                  className="whitespace-pre-wrap break-words w-full"
+                >
                   {post.title}
                 </Link>
               </TableCell>

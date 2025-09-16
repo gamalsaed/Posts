@@ -5,8 +5,10 @@ export default function Posts() {
   return (
     <div className="w-full mx-auto">
       <SearchProvider>
-        <PostsHeader />
-        <PostsTable />
+        <div className="w-full">
+          <PostsHeader />
+          <PostsTable />
+        </div>
       </SearchProvider>
     </div>
   );
